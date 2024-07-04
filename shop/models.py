@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 
 # Create your models here.
 MAX_LENGTH_CHAR = 255
@@ -15,9 +16,25 @@ class Supplier(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse_lazy('supplier_detail', kwargs={'pk':self.pk})
     class Meta:
         verbose_name = 'Поставщик'
         verbose_name_plural = 'Поставщики'
+
+
+class Supply(models.Model):
+    data_supply = models.DateTimeField(verbose_name="Дата поставки")
+    supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT, verbose_name="Поставщик")
+
+    product = models.ManyToManyField('Product', through='Pos_supply', verbose_name="Товар")
+
+    def __str__(self):
+        return f'Номер №{self.pk} - {self.data_supply}'
+
+    class Meta:
+        verbose_name = 'Поставка'
+        verbose_name_plural = 'Поставки'
 
 class Category(models.Model):
     name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Название')
@@ -92,6 +109,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категория')
     tag = models.ManyToManyField(Tag, blank=True, null=True, verbose_name='Тег')
 
+    warehouse = models.ManyToManyField('Warehouse', through='Inventory', verbose_name='Склад')
     parametr = models.ManyToManyField(Parametr, through='Pos_parametr', verbose_name='Характеристики')
 
     def __str__(self):
@@ -127,3 +145,52 @@ class Pos_order(models.Model):
         verbose_name = 'Позиция заказа'
         verbose_name_plural = 'Позиции заказов'
 
+class Pos_supply(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name='Товар')
+    supply = models.ForeignKey(Supply, on_delete=models.PROTECT, verbose_name='Поставка')
+    count = models.PositiveIntegerField(verbose_name='Количество товара')
+
+    def __str__(self):
+        return f'Номер поставки({self.supply.pk}) - {self.product.name} ({self.count} шт.)'
+
+    class Meta:
+        verbose_name = 'Позиция поставки'
+        verbose_name_plural = 'Позиции поставок'
+
+class Warehouse(models.Model):
+    manager = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Фамилия управляющего')
+    location = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Расположение')
+    capacity = models.PositiveIntegerField(verbose_name='Вместимость')
+
+    def __str__(self):
+        return f'#{self.pk} ({self.location})'
+
+    class Meta:
+        verbose_name = 'Склад'
+        verbose_name_plural = 'Склады'
+
+
+class Inventory(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name='Товар')
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT, verbose_name='Склад')
+    quantity = models.PositiveIntegerField(verbose_name='Количество')
+
+    def __str__(self):
+        return f'{self.product.name} - {self.warehouse.location}'
+
+    class Meta:
+        verbose_name = 'Инвентарь'
+        verbose_name_plural = 'Инвентари'
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
+    user_name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Имя пользователя')
+    rating = models.PositiveIntegerField(verbose_name='Рейтинг')
+    comment = models.TextField(verbose_name='Комментарий')
+
+    def __str__(self):
+        return f'{self.user_name} - {self.product.name}'
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
