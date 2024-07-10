@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse_lazy
 
+from shop.utils import sum_price_count
+
 # Create your models here.
 MAX_LENGTH_CHAR = 255
 
@@ -140,6 +142,9 @@ class Pos_order(models.Model):
 
     def __str__(self):
         return f'{self.pk} {self.product.name} {self.order.buyer_firstname} {self.order.buyer_name}'
+
+    def sum_price_count(self):
+        return sum_price_count(price=self.product.price, count=self.count,discount=self.discount)
 
     class Meta:
         verbose_name = 'Позиция заказа'

@@ -5,6 +5,8 @@ from shop.models import *
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
 
+from shop.utils import CalculateMoney
+
 
 # Create your views here.
 def product_list(request):
@@ -95,6 +97,18 @@ class DeleteSupplier(DeleteView):
     template_name = 'shop/supplier/supplier_cofirm_delete.html'
     success_url = reverse_lazy('product_list_filter')
 
+class OrderDetail(DetailView, CalculateMoney):
+    model = Order
+    template_name = 'shop/order.html'
+    def get_context_data(self,*, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        order = context.get('object')
+
+        list_price = [pos_order.sum_price_count() for pos_order in order.pos_order_set.all()]
+
+        context['sum_price'] = self.sum_price(prices=list_price)
+        return context
 
 
 
