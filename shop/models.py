@@ -83,7 +83,7 @@ class Order(models.Model):
     buyer_name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Имя покупателя')
     buyer_firstname = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Фамилия покупателя')
     buyer_surname = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True, verbose_name='Отчество покупателя')
-    comment = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Комментарий')
+    comment = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True, verbose_name='Комментарий')
     delivery_address = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Адрес доставки')
     delivery_type = models.CharField(max_length=2, choices=TYPE_DELIVERY, default=SHOP, verbose_name='Способ доставки')
     date_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания заказа')
