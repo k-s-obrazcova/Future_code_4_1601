@@ -51,7 +51,8 @@
             </td>
             <td>
                 {% if product.photo %}
-                    <img src="{{ product.photo.url }}" alt="..." style="max-height: 400px; max-width: 400px; object-fit: contain; border-radius: 20px">
+                    <img src="{{ product.photo.url }}" alt="..."
+                         style="max-height: 400px; max-width: 400px; object-fit: contain; border-radius: 20px">
                 {% else %}
                     <img src="{% static 'shop/image/no_photo.jpg' %}" alt="...">
                 {% endif %}
@@ -59,7 +60,12 @@
         </tr>
         </tbody>
     </table>
-    <a href="{% url 'product_list_filter' %}" class="btn btn-outline-dark" >Назад к каталогу</a>
+    <form method="post" action="{% url 'basket_add' product.pk %}" class="my-2">
+        {% csrf_token %}
+        {{ form_basket }}
+        <button type="submit" class="btn btn-outline-success my-2">Добавить в корзину</button>
+    </form>
+    <a href="{% url 'product_list_filter' %}" class="btn btn-outline-dark">Назад к каталогу</a>
 </div>
 </body>
 </html>

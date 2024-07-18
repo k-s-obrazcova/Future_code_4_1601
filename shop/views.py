@@ -1,11 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 
+from basket.forms import BasketAddProductForm
 from shop.forms import ProductFilterForm, SupplierForm
 from shop.models import *
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy
 
 from shop.utils import CalculateMoney
+from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import views
 
 
 # Create your views here.
@@ -15,6 +21,7 @@ def product_list(request):
         'product_list': list_product
     }
     return render(request, 'shop/product/catalog.html', context)
+
 
 def product_catalog_with_filter(request):
     list_product = Product.objects.all()
@@ -36,13 +43,14 @@ def product_catalog_with_filter(request):
         }
         return render(request, 'shop/product/catalog_with_filter.html', context)
 
+
 def get_one_product(request, id):
     product = get_object_or_404(Product, pk=id)
     context = {
-        'product': product
+        'product': product,
+        'form_basket': BasketAddProductForm
     }
     return render(request, 'shop/product/one_product.html', context)
-
 
 
 def get_one_filter_product(request):
@@ -51,6 +59,7 @@ def get_one_filter_product(request):
         'find_product': find_product
     }
     return render(request, 'shop/product/filter_product.html', context)
+
 
 def get_more_filter_product(request):
     find_product = Product.objects.filter(
@@ -78,9 +87,11 @@ class CreateSupplier(CreateView):
     template_name = 'shop/supplier/supplier_form.html'
     form_class = SupplierForm
 
+
 class DetailSupplier(DetailView):
     model = Supplier
     template_name = 'shop/supplier/supplier_detail.html'
+
 
 class UpdateSupplier(UpdateView):
     model = Supplier
@@ -91,16 +102,19 @@ class UpdateSupplier(UpdateView):
     }
     template_name = 'shop/supplier/supplier_form.html'
 
+
 class DeleteSupplier(DeleteView):
     model = Supplier
     # по умолчанию: название_приложения/название_model + _form.html
     template_name = 'shop/supplier/supplier_cofirm_delete.html'
     success_url = reverse_lazy('product_list_filter')
 
+
 class OrderDetail(DetailView, CalculateMoney):
     model = Order
     template_name = 'shop/order.html'
-    def get_context_data(self,*, object_list=None, **kwargs):
+
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
 
         order = context.get('object')
@@ -111,22 +125,9 @@ class OrderDetail(DetailView, CalculateMoney):
         return context
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def test_json(request):
+    return JsonResponse({
+        'massage': 'Данные в виде JSON',
+        'product': reverse_lazy('product_list_filter'),
+    })
 
