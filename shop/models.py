@@ -6,11 +6,13 @@ from shop.utils import sum_price_count
 # Create your models here.
 MAX_LENGTH_CHAR = 255
 
+
 class Supplier(models.Model):
     name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Название компании')
     agent_firstname = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Фамилия представителя')
     agent_name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Имя представителя')
-    agent_surname = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True, verbose_name='Отчество представителя')
+    agent_surname = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True,
+                                     verbose_name='Отчество представителя')
     agent_telephone = models.CharField(max_length=20, verbose_name='Телефон представителя')
     address = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Адрес')
     is_exists = models.BooleanField(default=True, verbose_name='Логическое удаление')
@@ -19,7 +21,8 @@ class Supplier(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse_lazy('supplier_detail', kwargs={'pk':self.pk})
+        return reverse_lazy('supplier_detail', kwargs={'pk': self.pk})
+
     class Meta:
         verbose_name = 'Поставщик'
         verbose_name_plural = 'Поставщики'
@@ -38,6 +41,7 @@ class Supply(models.Model):
         verbose_name = 'Поставка'
         verbose_name_plural = 'Поставки'
 
+
 class Category(models.Model):
     name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Название')
     description = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True, verbose_name='Описание')
@@ -48,6 +52,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Название')
@@ -71,6 +76,7 @@ class Parametr(models.Model):
         verbose_name = 'Характеристика'
         verbose_name_plural = 'Характеристики'
 
+
 class Order(models.Model):
     SHOP = "SH"
     COURIER = "CR"
@@ -82,12 +88,13 @@ class Order(models.Model):
     ]
     buyer_name = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Имя покупателя')
     buyer_firstname = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Фамилия покупателя')
-    buyer_surname = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True, verbose_name='Отчество покупателя')
+    buyer_surname = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True,
+                                     verbose_name='Отчество покупателя')
     comment = models.CharField(max_length=MAX_LENGTH_CHAR, blank=True, null=True, verbose_name='Комментарий')
     delivery_address = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Адрес доставки')
     delivery_type = models.CharField(max_length=2, choices=TYPE_DELIVERY, default=SHOP, verbose_name='Способ доставки')
     date_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания заказа')
-    date_finish = models.DateTimeField(null=True, blank=True,verbose_name='Дата завершения заказа')
+    date_finish = models.DateTimeField(null=True, blank=True, verbose_name='Дата завершения заказа')
 
     product = models.ManyToManyField('Product', through='Pos_order', verbose_name='Товар')
 
@@ -121,6 +128,7 @@ class Product(models.Model):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
+
 class Pos_parametr(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name='Продукт')
     parametr = models.ForeignKey(Parametr, on_delete=models.PROTECT, verbose_name='Характеристика')
@@ -144,11 +152,12 @@ class Pos_order(models.Model):
         return f'{self.pk} {self.product.name} {self.order.buyer_firstname} {self.order.buyer_name}'
 
     def sum_price_count(self):
-        return sum_price_count(price=self.product.price, count=self.count,discount=self.discount)
+        return sum_price_count(price=self.product.price, count=self.count, discount=self.discount)
 
     class Meta:
         verbose_name = 'Позиция заказа'
         verbose_name_plural = 'Позиции заказов'
+
 
 class Pos_supply(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name='Товар')
@@ -161,6 +170,7 @@ class Pos_supply(models.Model):
     class Meta:
         verbose_name = 'Позиция поставки'
         verbose_name_plural = 'Позиции поставок'
+
 
 class Warehouse(models.Model):
     manager = models.CharField(max_length=MAX_LENGTH_CHAR, verbose_name='Фамилия управляющего')
@@ -186,6 +196,7 @@ class Inventory(models.Model):
     class Meta:
         verbose_name = 'Инвентарь'
         verbose_name_plural = 'Инвентари'
+
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')

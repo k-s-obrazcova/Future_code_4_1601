@@ -15,7 +15,6 @@ from rest_framework.decorators import api_view
 from rest_framework import views, viewsets
 
 
-
 # Create your views here.
 def product_list(request):
     list_product = Product.objects.all()
@@ -184,3 +183,58 @@ class ProductViewSetDif(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'partial_update']:
             return ProductSerializer
         return ProductSerializerSimple
+
+
+class SupplierViewSet(viewsets.ModelViewSet):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer
+
+
+class SupplyViewSet(viewsets.ModelViewSet):
+    queryset = Supply.objects.all()
+    serializer_class = SupplySerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class ParametrViewSet(viewsets.ModelViewSet):
+    queryset = Parametr.objects.all()
+    serializer_class = ParametrSerializer
+
+
+class Pos_parametrViewSet(viewsets.ModelViewSet):
+    queryset = Pos_parametr.objects.all()
+    serializer_class = Pos_parametrSerializer
+
+
+class Pos_orderViewSet(viewsets.ModelViewSet):
+    queryset = Pos_order.objects.all()
+    serializer_class = Pos_orderSerializer
+
+
+class Pos_supplyViewSet(viewsets.ModelViewSet):
+    queryset = Pos_supply.objects.all()
+    serializer_class = Pos_supplySerializer
+
+
+class WarehouseViewSet(viewsets.ModelViewSet):
+    queryset = Warehouse.objects.all()
+    serializer_class = WarehouseSerializer
+
+
+class InventoryViewSet(viewsets.ModelViewSet):
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
