@@ -17,6 +17,8 @@ urlpatterns = [
 
     path('order/<int:pk>/', OrderDetail.as_view(), name='order_detail'),
 
+    path('filter/', template_filter_django, name='templates_filter_example'),
+
     path('api/', test_json, name='api_test'),
     path('api/orders/', order_api_list, name='api_order_list'),
     path('api/orders/<int:pk>/', order_api_detail, name='api_order_detail'),

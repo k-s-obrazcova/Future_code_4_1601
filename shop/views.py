@@ -273,7 +273,7 @@ class SupplierAdminViewSet(viewsets.ModelViewSet):
 def template_filter_django(request):
     context = {
         'digit': 84,
-        'stringText': "some text new test",
+        'stringText': "SSome.Text Sew test http://127.0.0.1:8000/shop/filter/",
         'bool': True,
         'boolSecond': False,
         'datetimeNow': datetime.datetime.now(),

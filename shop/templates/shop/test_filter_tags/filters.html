@@ -31,5 +31,27 @@
         <p><b>Пустота переменной 3</b>{{ var3|default:"empty" }}</p>
         <p><b>Пустота переменной 2</b>{{ var2|default_if_none:"empty none" }}</p>
         <p><b>Пустота переменной 3</b>{{ var3|default_if_none:"empty none" }}</p>
+
+        <p><b>floatformat:</b>{{ digit|floatformat:2 }}</p>
+        <p><b>iriencode:</b>{{ stringText|iriencode }}</p>
+        <p><b>linenumbers:</b>{{ stringText|linenumbers }}</p>
+        <p><b>lower:</b>{{ stringText|lower }}</p>
+        <p><b>make_list:</b>{{ stringText|make_list }}</p>
+        <p><b>random:</b>{{ stringText|random }}</p>
+        <p><b>slice:</b>{{ stringText|slice:":5" }}</p>
+        <p><b>slugify:</b>{{ stringText|slugify }}</p>
+        <p><b>striptags:</b>{{ stringText|striptags }}</p>
+        <p><b>time:</b>{{ datetimeNow|time:"H:i" }}</p>
+{#        <p><b>timesince:</b>{{ datetimeNow|timesince }}</p>#}
+{#        <p><b>timeuntil:</b>{{ datetimeNow|timeuntil }}</p>#}
+        <p><b>title:</b>{{ stringText|title }}</p>
+        <p><b>truncatechars:</b>{{ stringText|truncatechars:10 }}</p>
+        <p><b>truncatewords:</b>{{ stringText|truncatewords:2 }}</p>
+        <p><b>upper:</b>{{ stringText|upper }}</p>
+        <p><b>urlencode:</b>{{ stringText|urlencode }}</p>
+        <p><b>urlize:</b>{{ stringText|urlize }}</p>
+        <p><b>wordcount:</b>{{ stringText|wordcount }}</p>
+        <p><b>wordwrap:</b>{{ stringText|wordwrap:20 }}</p>
+        <p><b>yesno:</b>{{ var3|yesno:"да,нет,может быть" }}</p>
     </div>
 {% endblock %}
