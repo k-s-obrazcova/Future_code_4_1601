@@ -273,7 +273,7 @@ class SupplierAdminViewSet(viewsets.ModelViewSet):
 def template_filter_django(request):
     context = {
         'digit': 84,
-        'stringText': "SSome.Text Sew test http://127.0.0.1:8000/shop/filter/",
+        'stringText': "some text new test",
         'bool': True,
         'boolSecond': False,
         'datetimeNow': datetime.datetime.now(),
@@ -287,3 +287,17 @@ def template_filter_django(request):
         ]
     }
     return render(request, 'shop/test_filter_tags/filters.html', context=context)
+
+
+def template_tag_django(request):
+    context = {
+        'some_list': ['text6', 'text6', 'text3', 'text4', 'text5', 'text6'],
+        'var1': None,
+        'var2': 'False',
+        'var3': 0,
+        'var4': '',
+        'var5': 'Вывод',
+        'obj': Product.objects.get(pk=1),
+        'html_code': '<p>Это тестовый HTML код</p>',
+    }
+    return render(request, 'shop/test_filter_tags/tags.html', context=context)
