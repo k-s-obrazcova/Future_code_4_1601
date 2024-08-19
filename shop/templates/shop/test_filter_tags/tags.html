@@ -83,4 +83,39 @@
         {% templatetag opencomment %}
         {% templatetag closecomment %}
     </div>
+
+    <div>
+        <h2>Первое из подходящих (не нулевое, не пустое и т.д.)</h2>
+        {% firstof var1 var2 var3 var4 %}
+    </div>
+
+    <div>
+        <h2>Получение текущей даты</h2>
+{#        {% now 'DATETIME_FORMAT' %}#}
+        {% now 'Сегодня D y' %}
+    </div>
+
+    <div>
+        <h2>Тестовый текст/слова для вывода
+            (1 - число слов/абзацев,
+            2 - метод генерации (w - слова, p - абзацы, b - текст),
+            3 - рандомность) </h2>
+        {% lorem 2 p random %}
+    </div>
+
+    <div>
+        <h2>Отладочная информация</h2>
+            {% debug %}
+    </div>
+
+
+    {% load custom %}
+
+    <div>
+        <h2>Собственные теги</h2>
+        <h3>Умножение</h3>
+        {% multiply 5 10 %}
+        <h3>Приветствие</h3>
+        {% hello_user user %}
+    </div>
 {% endblock %}

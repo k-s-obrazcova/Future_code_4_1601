@@ -293,7 +293,7 @@ def template_tag_django(request):
     context = {
         'some_list': ['text6', 'text6', 'text3', 'text4', 'text5', 'text6'],
         'var1': None,
-        'var2': 'False',
+        'var2': False,
         'var3': 0,
         'var4': '',
         'var5': 'Вывод',
