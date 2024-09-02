@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_name %}
+    Товары
+{% endblock %}
+
+{% block content %}
+    <h1>Недвижимость</h1>
+    <div class="row">
+        {% for object in object_list %}
+            {% include 'house_shop/_inc/_card.html' with photo_need=True url_name='house_detail' %}
+        {% empty %}
+            <h2>Товаров нет в наличии</h2>
+        {% endfor %}
+    </div>
+{% endblock %}
