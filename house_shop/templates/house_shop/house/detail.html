@@ -30,7 +30,27 @@
                     Описание отсутствует
                 {% endif %}
             </td>
+            <td>{{ object.price }} руб.</td>
+            <td>{{ object.developer.name }}</td>
+            <td>
+                <ul>
+                    {% for service in object.service.all %}
+                        <li>{{ service.name }}</li>
+                    {% empty %}
+                        <li>Нет доступных услуг</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {% if object.photo %}
+                    <img src="{{ object.photo.url }}" class="card-img-top" alt="...">
+                {% else %}
+                    <img src="{% static 'shop/image/no_photo.jpg' %}" class="card-img-top" alt="...">
+                {% endif %}
+            </td>
         </tr>
         </tbody>
     </table>
+    <a href="{% url 'house_list' %}" class="btn btn-outline-dark my-2">Обратно к каталогу домов</a>
 </div>
+{% endblock %}

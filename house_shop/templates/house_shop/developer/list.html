@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title_name %}
+    Каталог застройщиков
+{% endblock %}
+
+{% block content %}
+    <h1>Застройщики</h1>
+    <div class="row">
+        {% for object in object_list %}
+            {% include 'house_shop/_inc/_card.html' with url_name='developer_detail' %}
+        {% empty %}
+            <h3>Застройщики отсутствуют</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

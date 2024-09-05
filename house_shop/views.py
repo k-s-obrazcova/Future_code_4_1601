@@ -4,7 +4,9 @@ from rest_framework import viewsets
 
 from house_shop.forms import OrderForm
 from house_shop.models import *
+
 from house_shop.serializer import *
+from rest_framework import viewsets
 
 
 # ___________________HOUSE_____________________
@@ -69,12 +71,42 @@ class DeveloperDetail(DetailView):
     template_name = 'house_shop/developer/detail.html'
 
 
+# _____________________API____________________________________
+class RealtorViewSet(viewsets.ModelViewSet):
+    queryset = Realtor.objects.all()
+    serializer_class = RealtorSerializer
+
+
+class DeveloperViewSet(viewsets.ModelViewSet):
+    queryset = Developer.objects.all()
+    serializer_class = DeveloperSerializer
+
+
+class ServicesViewSet(viewsets.ModelViewSet):
+    queryset = Services.objects.all()
+    serializer_class = ServiceSerializer
+
 
 class HouseViewSet(viewsets.ModelViewSet):
     queryset = House.objects.all()
     serializer_class = HouseSerializer
 
 
-class DeveloperViewSet(viewsets.ModelViewSet):
-    queryset = Developer.objects.all()
-    serializer_class = DeveloperSerializer
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+
+class DevelopmentViewSet(viewsets.ModelViewSet):
+    queryset = Development.objects.all()
+    serializer_class = DevelopmentSerializer
+
+
+class PosOrderViewSet(viewsets.ModelViewSet):
+    queryset = PosOrder.objects.all()
+    serializer_class = PosOrderSerializer
+
+
+class PosDevelopmentViewSet(viewsets.ModelViewSet):
+    queryset = PosDevelopment.objects.all()
+    serializer_class = PosDevelopmentSerializer

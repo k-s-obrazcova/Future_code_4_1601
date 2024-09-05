@@ -5,26 +5,26 @@ from .models import *
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
-        fields = ['name', 'description']
+        fields = '__all__'
 
 
-class ServicesSerializer(serializers.ModelSerializer):
+class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Services
-        fields = ['name', 'description']
+        fields = '__all__'
 
 
 class HouseSerializer(serializers.ModelSerializer):
     class Meta:
         model = House
-        fields = ['name', 'description', 'price', 'size', 'color', 'photo', 'create_date', 'update_date', 'is_exists',
+        fields = ['name', 'description', 'price', 'size', 'color', 'create_date', 'update_date', 'is_exists',
                   'developer']
 
 
 class RealtorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Realtor
-        fields = ['name', 'description', 'phone', 'city', 'address', 'is_exists']
+        fields = '__all__'
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class DevelopmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Development
-        fields = ['date_development', 'developer']
+        fields = '__all__'
 
 
 class PosOrderSerializer(serializers.ModelSerializer):
